@@ -1,11 +1,7 @@
 import { ReactNode, useRef } from "react";
 import * as THREE from "three";
 
-import {
-  OrbitControls,
-  Environment,
-  PerspectiveCamera,
-} from "@react-three/drei";
+import { Environment, PerspectiveCamera } from "@react-three/drei";
 
 import { useControls, folder } from "leva";
 
@@ -19,19 +15,22 @@ type LayoutProps = {
 function Layout({ children, bg }: LayoutProps) {
   const cameraRef = useRef<Camera>();
 
-  const [gui, setGui] = useControls(() => ({
-    Layout: folder({
-      bg: Layout.defaultProps.bg,
-      camera: folder({
-        fov: 50,
-        position: {
-          value: [7, 4.0, 21.0],
-          step: 0.1,
-        },
-      }),
-      grid: true,
-      axes: true,
-    }),
+  const [gui] = useControls(() => ({
+    Layout: folder(
+      {
+        bg: Layout.defaultProps.bg,
+        camera: folder({
+          fov: 50,
+          position: {
+            value: [7, 4.0, 21.0],
+            step: 0.1,
+          },
+        }),
+        grid: true,
+        axes: true,
+      },
+      { collapsed: true }
+    ),
   }));
   // console.log("gui=", gui);
 
@@ -42,12 +41,6 @@ function Layout({ children, bg }: LayoutProps) {
         fov={gui.fov}
         ref={cameraRef}
         position={gui.position}
-      />
-      <OrbitControls
-        camera={cameraRef.current}
-        onChange={(e) => {
-          setGui({ position: cameraRef.current?.position.toArray() }); // https://github.com/pmndrs/leva/blob/main/docs/advanced/controlled-inputs.md#set-and-onchange
-        }}
       />
 
       <Environment background>

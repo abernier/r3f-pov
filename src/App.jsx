@@ -2,17 +2,15 @@ import { Canvas } from "@react-three/fiber";
 import styled from "@emotion/styled";
 
 import Layout from "./Layout";
+import Foo from "./Foo";
 
 function App() {
   return (
     <App.Styled>
       <Canvas shadows>
-        <Layout>
-          <mesh castShadow>
-            <boxGeometry args={[2, 2, 2]} />
-            <meshStandardMaterial color="blue" />
-          </mesh>
-        </Layout>
+        <Layout />
+
+        <Foo />
       </Canvas>
     </App.Styled>
   );
